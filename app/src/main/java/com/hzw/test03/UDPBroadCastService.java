@@ -80,7 +80,6 @@ public class UDPBroadCastService extends Service {
         int four = ip & 0xff;
 
         StringBuffer buf = new StringBuffer();
-
         buf.append(four).append(".").append(third).append(".")
                 .append(second).append(".").append(first);
         return buf.toString();

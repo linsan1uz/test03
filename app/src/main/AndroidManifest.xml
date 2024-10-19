@@ -22,13 +22,7 @@
             android:directBootAware="true"
             android:enabled="true"/>
         <activity
-            android:name=".ThirdActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SecondActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FirstActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
