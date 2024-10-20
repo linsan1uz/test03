@@ -26,31 +26,25 @@ public class UDPBroadCastService extends Service {
     private static final int PORT = 8000;
     private MulticastSocket multicastSocket;
     private String broadGroup = "224.0.0.100";
+    private Thread myThread;
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        new Thread(new Runnable() {
+        Log.i(TAG, "onStartCommand: 服务开启");
+        myThread =  new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     multicastSocket = new MulticastSocket(PORT);
-                    String localIPAddress = getLocalIPAddress(UDPBroadCastService.this);
-                    Log.i(TAG, "ip address:"+localIPAddress);
-
-                    sendData("hello".getBytes(),multicastSocket, InetAddress.getByName(broadGroup),PORT);
-                   /* byte[] buffer = {1,2,3};
-                    DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length, InetAddress.getByName(localIPAddress),PORT);
-                    multicastSocket.send(datagramPacket);
-                    while (true){
-                        multicastSocket.receive(datagramPacket);
-                        String message = new String(datagramPacket.getData(), 0, datagramPacket.getLength());
-                        Log.i(TAG, "receive message:"+message);
-                    }*/
+                    String value = intent.getStringExtra("value");
+                    byte[] valueBytes = value.getBytes();
+                    sendData(valueBytes,multicastSocket, InetAddress.getByName(broadGroup),PORT);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
 
             }
-        }).start();
+        });
+        myThread.start();
         return START_STICKY;
     }
 
@@ -94,8 +88,10 @@ public class UDPBroadCastService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (multicastSocket!=null){
+        if (multicastSocket!=null&&myThread!=null&&myThread.isAlive()){
             multicastSocket.close();
+            myThread.interrupt();
         }
+        Log.i(TAG, "UDP 服务已关闭");
     }
 }

@@ -56,7 +56,7 @@ public class UDPReceiver extends Service implements Receiver {
                         String resultCode = onReceive(multicastSocket,address,PORT);
                         Log.i(TAG, "onReceive: "+resultCode);
                         //根据返回值s 进行逻辑判断
-                        if (resultCode.equals("hello")){
+                        if (resultCode.equals("1")){
                             //返回成功
                             Log.i(TAG, "接收成功");
                         }else {

@@ -1,8 +1,12 @@
 package com.hzw.test03;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
@@ -42,5 +46,4 @@ public class MainActivity extends AppCompatActivity{
             return fragmentList.size();
         }
     }
-
 }
